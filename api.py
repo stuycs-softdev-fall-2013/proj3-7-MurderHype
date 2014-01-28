@@ -1,3 +1,5 @@
+##################################### From last project ########################
+
 from rauth import OAuth1Session
 
 def search_yelp(location, term='lawyer', limit='6',

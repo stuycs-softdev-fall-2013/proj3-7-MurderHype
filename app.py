@@ -6,7 +6,7 @@ import api
 
 
 app=Flask(__name__)
-app.secret_key = "ULTIMATEMURDERGUIDE"
+app.secret_key = "MURDER HYPE"
 
 @app.route('/',methods=["POST","GET"])
 def home():
@@ -18,6 +18,8 @@ def hometwo():
         if request.method == 'GET':
                 return render_template("Home.html")
 
+
+##################################### From last project ########################
 @app.route('/weather',methods=["POST","GET"])
 def weather():
         if request.method == 'GET':
@@ -126,6 +128,7 @@ def lawyer():
                 return render_template('Lawyer.html',
                                        lawyers=api.search_yelp(address)['businesses'])
                 
-        
+##################################### From last project ########################
+
 if __name__ == '__main__':
         app.run(debug=True, host='0.0.0.0', port =7002)
