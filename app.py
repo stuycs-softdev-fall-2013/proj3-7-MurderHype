@@ -11,12 +11,8 @@ app.secret_key = "MURDER HYPE"
 @app.route('/',methods=["POST","GET"])
 def home():
         if request.method == 'GET':
-                return render_template("Home.html")
+                return render_template("index.html")
 
-@app.route('/home',methods=["POST","GET"])
-def hometwo():
-        if request.method == 'GET':
-                return render_template("Home.html")
 
 
 ##################################### From last project ########################
