@@ -3,9 +3,9 @@ client = MongoClient()
 users = client.db.users
 
 
-def register(username,pw):
+def register(username,pw,name,detail):
     if users.find({"username":username}).count() == 0:
-        users.insert({"username":username,"pw":pw,"posts":0})
+        users.insert({"username":username,"pw":pw,'name':name,'detail':detail,"posts":0})
     else: return False
     return True
 

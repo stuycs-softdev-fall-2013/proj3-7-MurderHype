@@ -66,10 +66,16 @@
 	<td>Favorite Killing Method</td>
 	<td>Number of Kills</td>
       </tr>
+      {% x = 1 %}
+      {% for ranker in data %}
       <tr>
-	
+	<td>{{x}}</td>
+	<td>{{ranker['username']}}</td>
+	<td>{{ranker['detail']}}</td>
+	<td>{{ranker['posts']}}</td>
       </tr>
-      
+      {% x = x + 1 %}
+      {% endfor %}      
     </table>
 
 

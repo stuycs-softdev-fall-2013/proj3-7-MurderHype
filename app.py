@@ -3,7 +3,9 @@ from flask import render_template,session,redirect,request,url_for
 import urllib2
 import method
 import api
-
+import auth
+import posts
+import forum
 
 app=Flask(__name__)
 app.secret_key = "MURDER HYPE"
@@ -11,7 +13,52 @@ app.secret_key = "MURDER HYPE"
 @app.route('/',methods=["POST","GET"])
 def home():
         if request.method == 'GET':
-                return render_template("index.html")
+                return render_template("index.html",error-message="")
+	elif request.method == 'POST':
+		if (auth.authen(request.form['user'],request.form['pw'])):
+			session['user'] = request.form['user']
+			return redirect(url_for('home',error-message=""))
+		else:
+			return redirect(url_for('home',error-message="Incorrect username/password. Please try again."))
+
+@app.route('/leaderbroad',methods=["GET"])
+def leaderboard():
+	if request.method == 'GET':
+		return render_template("leaderboard.html",data=posts.getRanking())
+
+@app.route('/register',methods=["POST","GET"])
+def register():
+	if 'user' in session:
+		return redirect(url_for('home',error-message=""))
+	elif request.method == "GET":
+		return render_template("register.html")
+	elif request.method == "POST":
+		name = request.form['name']
+		user = request.form['user']
+		pw = request.form['pw']
+		detail = request.form['detail']
+		if (auth.register(user,pw,name,detail)):
+			session['user'] = user
+			return redirect(url_for('home',error-message=""))
+		else:
+			return redirect(url_for('register',em="username already registered!"))
+
+@app.route('/addkill',methods=["POST","GET"])
+def addKill():
+	if 'user' not in session:
+		return redirect(url_for('home',error-message="Please login first!"))
+	elif request.method == "GET":
+		return render_template("addkill.html",em="")
+	elif request.method == "POST":
+		author = session['user']
+		victim = request.form['victim']
+		way = request.form['method']
+		diffi = request.form['diff']
+		detail = reqeust.form['detail']
+		if (posts.write(author,victim,way,diffi,detail)):
+			return redirect(url_for("profile"))
+		else:
+			return redirect(url_for("addKill",em="You have already killed this person before!"))
 
 
 
