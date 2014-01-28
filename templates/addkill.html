@@ -33,14 +33,24 @@
         <div class="navbar-collapse collapse">
 	  <ul class="nav navbar-nav">
 	    <li>
-	      <a href="index.html">Home</a>
+	      <a href="{{url_for('home')}}">Home</a>
 	    </li>
 	    <li>
-	      <a href="leaderboard.html">Leaderboard</a>
+	      <a href="{{url_for('leaderboard')}}">Leaderboard</a>
 	    </li>
 	    <li>
-	      <a href="forums.html">Forums</a>
+	      <a href="{{url_for('forums')}}">Forums</a>
 	    </li>
+	    {% if 'user' in session %}
+	    <li>
+	      <a href="{{url_for('profile')}}">Profile</a>
+	    </li>
+	    <li></li>
+	    <li></li>
+	    <li>
+	      <a href="{{url_for('logout')}}">Log Out</a>
+	    </li>
+	    {% endif %}
 	  </ul> 
         </div><!--/.navbar-collapse -->
       </div>
@@ -62,25 +72,25 @@
 	  <div class="form-group">
 	    <label for="input" class="col-sm-2 control-label">Full name</label>
 	    <div class="col-sm-5">
-	      <input type="email" class="form-control" id="victim" placeholder="Name of the victim">
+	      <input type="text" class="form-control" name="victim" placeholder="Name of the victim">
 	    </div>
 	  </div>
 	  <div class="form-group">
 	    <label for="input" class="col-sm-2 control-label">Method</label>
 	    <div class="col-sm-5">
-	      <input type="email" class="form-control" id="method" placeholder="How'd you kill 'em?">
+	      <input type="text" class="form-control" name="method" placeholder="How'd you kill 'em?">
 	    </div>
 	  </div>
 	  <div class="form-group">
 	    <label for="input" class="col-sm-2 control-label">Level of Difficulty</label>
 	    <div class="col-sm-5">
-	      <input type="text" class="form-control" id="diff" placeholder="Easy? Hard?">
+	      <input type="text" class="form-control" name="diff" placeholder="Easy? Hard?">
 	    </div>
 	  </div>
 	  <div class="form-group">
 	    <label for="input" class="col-sm-2 control-label">Description</label>
 	    <div class="col-sm-10">
-	      <input type="text" class="form-control" id="detail" placeholder="Tell us briefly about it">
+	      <input type="text" class="form-control" name="detail" placeholder="Tell us briefly about it">
 	    </div>
 	  </div>
 	  <p></p>

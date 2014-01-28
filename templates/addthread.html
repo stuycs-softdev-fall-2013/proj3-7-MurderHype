@@ -33,17 +33,27 @@
         <div class="navbar-collapse collapse">
 	  <ul class="nav navbar-nav">
 	    <li>
-	      <a href="index.html">Home</a>
+	      <a href="{{url_for('home')}}">Home</a>
 	    </li>
 	    <li>
-	      <a href="leaderboard.html">Leaderboard</a>
+	      <a href="{{url_for('leaderboard')}}">Leaderboard</a>
 	    </li>
 	    <li>
-	      <a href="forums.html">Forums</a>
+	      <a href="{{url_for('forums')}}">Forums</a>
 	    </li>
 	    <li>
-	      <a href="addkill.html">Add Kill</a>
+	      <a href="{{url_for('addKill')}}">Add Kill</a>
 	    </li>
+	    {% if "user" in session %}
+	    	    <li>
+	      <a href="{{url_for('profile')}}">Profile</a>
+	    </li>
+	    <li></li>
+	    <li></li>
+	    <li>
+	      <a href="{{url_for('logout')}}">Log Out</a>
+	    </li>
+	    {% endif %}
 	  </ul> 
         </div><!--/.navbar-collapse -->
       </div>
@@ -62,19 +72,23 @@
       
       <!-- New Thread
 	   =================================== -->
-      <form role="form">
+      <form role="form" method = "POST">
 	<div class="form-group">
 	  <label for="exampleInputEmail1">Title</label>
-	  <textarea class="form-control" rows="1" placeholder="What's your question?"></textarea>
+	  <textarea class="form-control" name="title" rows="1" placeholder="What's your question?"></textarea>
 	</div>
-      </form>
-      <form role="form">
-	<div class="form-group">
+        <div class="form-group">
 	  <label for="exampleInputEmail1">Content</label>
-	  <textarea class="form-control" rows="5" placeholder="Description"></textarea>
+	  <textarea class="form-control" name="post" rows="5" placeholder="Description"></textarea>
 	</div>
+	<div class="form-group">
+	<div class="col-sm-offset-2 col-sm-10">
+	  <button type="submit" class="btn btn-default">Submit</button>
+	</div>
+	
       </form>
       
+            
       
       
       <!-- Bootstrap core JavaScript

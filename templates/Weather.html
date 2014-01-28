@@ -33,17 +33,27 @@
         <div class="navbar-collapse collapse">
 	  <ul class="nav navbar-nav">
 	    <li>
-	      <a href="index.html">Home</a>
+	      <a href="{{url_for('home')}}">Home</a>
 	    </li>
 	    <li>
-	      <a href="leaderboard.html">Leaderboard</a>
+	      <a href="{{url_for('leaderboard')}}">Leaderboard</a>
 	    </li>
 	    <li>
-	      <a href="forums.html">Forums</a>
+	      <a href="{{url_for('forums')}}">Forums</a>
 	    </li>
 	    <li>
-	      <a href="addkill.html">Add Kill</a>
+	      <a href="{{url_for('addKill')}}">Add Kill</a>
 	    </li>
+	    {% if 'user' in session %}
+	    <li>
+	      <a href="{{url_for('profile')}}">Profile</a>
+	    </li>
+	    <li></li>
+	    <li></li>
+	    <li>
+	      <a href="{{url_for('logout')}}">Log Out</a>
+	    </li>
+	    {% endif %}
 	  </ul> 
         </div><!--/.navbar-collapse -->
       </div>
@@ -53,48 +63,65 @@
 	 ======================================== -->
     <div class="container" style="margin-top: 80px">
       <div class="jumbotron">
-	<h1>Find a lawyer here.</h1>
+	<h1>Check the weather out.</h1>
 	<p>
-	  Using Yelp.
 	</p>
       </div>
       
       
-      <!-- Search
+      <!-- 
 	   =========================================-->
-       <form class="form-inline" role="form">
+      <br>
+      <br>
+      <form class="form-inline" role="form">
 	<div class="form-group">
 	  <label class="sr-only" for="exampleInputEmail2">Check zip code</label>
 	  <input type="text" class="form-control" id="exampleInputEmail2" placeholder="Zip Code">
 	</div>
 	<button type="submit" class="btn btn-default">Search</button>
       </form>
-       
-       <br>
-       <br>
-       
-        <div class="large-8 columns">
-          <div class="row">
-                    {% if lawyers is defined %}
-                        {% for lawyer in lawyers %}
-            <div class="large-4 small-6 columns">
-                          <a href="{{ lawyer['url'] }}"><font face = "purisa" color = "red" size = "6">Pew Pew!</font>
-<p>
-                <img src="{{ lawyer['image_url'] }}">
-                          </a>
-              <div class="panel">
-                <h5>{{ lawyer['name'] }}</h5>
-                <h6 class="subheader">
-                                  <img src={{ lawyer['rating_img_url_small'] }}>
-                                </h6>
-              </div>
-            </div>
-                        {% endfor %}
-                        {% endif %}
-          </div>
+      
+      <br>
+      <div style="border-bottom-style:solid; border-bottom-width: 1px">
+	<h1>Conditions Today for Zip Code: {{zips}} </h1>
+      </div>
+      <p>{{temp}}</p>
+      <p>{{winds}}</p>
+      <p>{{rainfall}}</p>
+     
+      <p></p>
+      <div style="border-bottom-style:solid; border-bottom-width: 1px">
+	<h3>Weather</h3>
+      </div>
+      <h4>Welcome to the weather panel! Here we will display whether the weather today is great for burying a dead body or not! We also have the forecast for the next few days! You MUST enter in a valid US Zip Code, otherwise it will NOT work! The great weathers for burying a body are cloudy, sunny (but don't do it out in the open!), partly cloudy, partly sunny, and clear nights. *If the rainfall displays some crazy negative number, it means you're not getting rain.</h4>
+	<img src="../static/img/icon.gif" alt="icon" class="img-rounded">
+	<br>
+	<br>
+	<br>
 
+	<div class="container marketing">
+
+	  <!-- Three columns of text below the carousel -->
+	  <div class="row">
+            <div class="col-lg-4">
+              
+              <h2>Today {{day1}}:{{today}}</h2>
+             
+            </div><!-- /.col-lg-4 -->
+            <div class="col-lg-4">
+              
+              <h2>Tomorrow {{day2}}:{{tomorrow}}</h2>
+              
+            </div><!-- /.col-lg-4 -->
+            <div class="col-lg-4">
+              
+              <h2>The day after tomorrow {{day3}}:{{datomorrow}}</h2>
+             
+            </div><!-- /.col-lg-4 -->
+	  </div><!-- /.row -->
+	</div>
     </div>
-    
+       
     <!-- Bootstrap core JavaScript
 	 ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->

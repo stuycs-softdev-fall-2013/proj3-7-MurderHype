@@ -9,29 +9,49 @@ import forum
 
 app=Flask(__name__)
 app.secret_key = "MURDER HYPE"
+_link = ""
 
 @app.route('/',methods=["POST","GET"])
 def home():
         if request.method == 'GET':
-                return render_template("index.html",error-message="")
+                return render_template("index.html",error_message="")
 	elif request.method == 'POST':
 		if (auth.authen(request.form['user'],request.form['pw'])):
 			session['user'] = request.form['user']
-			return redirect(url_for('home',error-message=""))
+			return redirect(url_for('home'))
 		else:
-			return redirect(url_for('home',error-message="Incorrect username/password. Please try again."))
+			e = "Incorrect username/password combination"
+			return render_template('index.html',error_message=e)
+
+@app.route('/home',methods=["POST","GET"])
+def home2():
+        if request.method == 'GET':
+                return render_template("index.html",error_message="You must login first!!!")
+	elif request.method == 'POST':
+		if (auth.authen(request.form['user'],request.form['pw'])):
+			session['user'] = request.form['user']
+			return redirect(url_for('home'))
+		else:
+			e = "Incorrect username/password combination"
+			return render_template('index.html',error_message=e)
+
+@app.route('/logout')
+def logout():
+	session.pop("user",None)
+	return redirect(url_for('home'))
 
 @app.route('/leaderbroad',methods=["GET"])
 def leaderboard():
 	if request.method == 'GET':
-		return render_template("leaderboard.html",data=posts.getRanking())
+		data = posts.getRanking()
+		return render_template("leaderboard.html",data=data)
 
 @app.route('/register',methods=["POST","GET"])
 def register():
 	if 'user' in session:
-		return redirect(url_for('home',error-message=""))
+		return redirect(url_for('home'))
 	elif request.method == "GET":
-		return render_template("register.html")
+		return render_template("register.html",em="")
 	elif request.method == "POST":
 		name = request.form['name']
 		user = request.form['user']
@@ -39,14 +59,15 @@ def register():
 		detail = request.form['detail']
 		if (auth.register(user,pw,name,detail)):
 			session['user'] = user
-			return redirect(url_for('home',error-message=""))
+			return redirect(url_for('home'))
 		else:
-			return redirect(url_for('register',em="username already registered!"))
+			return render_template('register.html',em="username already registered!")
+
 
 @app.route('/addkill',methods=["POST","GET"])
 def addKill():
 	if 'user' not in session:
-		return redirect(url_for('home',error-message="Please login first!"))
+		return redirect(url_for('home2'))
 	elif request.method == "GET":
 		return render_template("addkill.html",em="")
 	elif request.method == "POST":
@@ -54,12 +75,64 @@ def addKill():
 		victim = request.form['victim']
 		way = request.form['method']
 		diffi = request.form['diff']
-		detail = reqeust.form['detail']
+		detail = request.form['detail']
 		if (posts.write(author,victim,way,diffi,detail)):
 			return redirect(url_for("profile"))
 		else:
-			return redirect(url_for("addKill",em="You have already killed this person before!"))
+			return render_template("addkill.html",em="You have already killed this person before!")
 
+
+@app.route('/profile',methods =["GET"])
+def profile():
+	if 'user' not in session:
+		return redirect(url_for('home2'))
+	elif request.method == "GET":
+		author = session['user']
+		data = posts.getPosts(author)
+		return render_template("profile.html",data = data)
+
+@app.route('/addthread',methods=["POST","GET"])
+def addthread():
+	if 'user' not in session:
+		return redirect(url_for('home2'))
+	elif request.method=="GET":
+		return render_template('addthread.html',em="")
+	elif request.method=="POST":
+		author = session['user']
+		title = request.form['title']
+		post = request.form['post']
+		if (forum.write(author,title,post)):
+			return redirect(url_for('forums'))
+		else:
+			return render_template('addthread.html',em="Another thread by the same title exists!")
+
+@app.route('/thread',methods=["POST","GET"])
+def thread():
+	global _link
+	topic = _link
+	T = forum.getPost(topic)
+	C = forum.getResponses(topic)
+	if request.method=="GET":
+		return render_template('thread.html',OC = T,com=C)
+	elif request.method == "POST":
+		author = session['user']
+		text = request.form['response']
+		forum.respond(author,topic,text)
+		C = forum.getResponses(topic)
+		return render_template('thread.html',OC=T,com=C)
+
+@app.route('/forum',methods=["POST","GET"])
+def forums():
+	if request.method == "GET":
+		data = forum.getTitles()
+		return render_template("forums.html",data=data)
+	elif request.method == "POST":
+		if request.form['btn'] == "new":
+			return redirect(url_for("addthread"))
+		elif request.form['btn']:
+			global _link
+			_link = request.form['btn']
+			return redirect(url_for('thread'))
 
 
 ##################################### From last project ########################
@@ -174,4 +247,4 @@ def lawyer():
 ##################################### From last project ########################
 
 if __name__ == '__main__':
-        app.run(debug=True, host='0.0.0.0', port =7002)
+        app.run(debug=True, host='0.0.0.0', port =7700)

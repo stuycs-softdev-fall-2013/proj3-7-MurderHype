@@ -33,17 +33,28 @@
         <div class="navbar-collapse collapse">
 	  <ul class="nav navbar-nav">
 	    <li>
-	      <a href="index.html">Home</a>
+	      <a href="{{url_for('home')}}">Home</a>
 	    </li>
 	    <li>
-	      <a href="leaderboard.html">Leaderboard</a>
+	      <a href="{{url_for('leaderboard')}}">Leaderboard</a>
 	    </li>
 	    <li>
-	      <a href="forums.html">Forums</a>
+	      <a href="{{url_for('forums')}}">Forums</a>
 	    </li>
+	    {% if 'user' in session %}
 	    <li>
-	      <a href="addkill.html">Add Kill</a>
+	      <a href="{{url_for('addKill')}}">Add Kill</a>
 	    </li>
+
+	    <li>
+	      <a href="{{url_for('profile')}}">Profile</a>
+	    </li>
+	    <li></li>
+	    <li></li>
+	    <li>
+	      <a href="{{url_for('logout')}}">Log Out</a>
+	    </li>
+	    {% endif %}
 	  </ul> 
         </div><!--/.navbar-collapse -->
       </div>
@@ -64,21 +75,37 @@
 	   =================================== -->
       <div class="panel panel-default">
 	<div class="panel-heading">
-	  <h3 class="panel-title">Thread title</h3>
+	  <h3 class="panel-title">{{OC[0]['title']}}  by: {{OC[0]['author']}} at: {{OC[0]['time']}}</h3>
 	</div>
 	<div class="panel-body">
-	  Thread content
+	  {{OC[0]['post']}}
 	</div>
       </div>
-      <form role="form">
+
+      {% for x in com %}
+      <div class="panel panel-default">
+	<div class="panel-heading">
+	  <h3 class="panel-title">{{x['author']}}  {{x['time']}}  {{x['likes']}}</h3>
+	</div>
+	<div class="panel-body">
+	  {{x['response']}}
+	</div>
+      </div>
+
+
+      {% endfor %}
+
+      {% if "user" in session %}
+      <form role="form" method="POST">
 	<div class="form-group">
 	  <label for="exampleInputEmail1">Add to thread</label>
-	  <textarea class="form-control" rows="8" placeholder="Say something"></textarea>
+	  <textarea class="form-control" rows="8" name="response" placeholder="Say something"></textarea>
 	</div>
-      </form>
+
       
-      <p><a class="btn btn-primary btn-lg" role="button">Comment</a></p>
-      
+      <p><button class="btn btn-primary btn-lg" name="btn" type="submit">Comment</button></p>
+      </form>      
+      {% endif %}
       <!-- Bootstrap core JavaScript
 	   ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->

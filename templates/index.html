@@ -33,19 +33,30 @@
         <div class="navbar-collapse collapse">
 	  <ul class="nav navbar-nav">
 	    <li class="active">
-	      <a href="index.html">Home</a>
+	      <a href="{{url_for('home')}}">Home</a>
 	    </li>
 	    <li>
-	      <a href="leaderboard.html">Leaderboard</a>
+	      <a href="{{url_for('leaderboard')}}">Leaderboard</a>
 	    </li>
 	    <li>
-	      <a href="forums.html">Forums</a>
+	      <a href="{{url_for('forums')}}">Forums</a>
 	    </li>
+	    {% if "user" in session %}
+	    <li>
+	      <a href="{{url_for('profile')}}">Profile</a>
+	    </li>
+	    <li></li>
+	    <li></li>
+	    <li>
+	      <a href="{{url_for('logout')}}">Log Out</a>
+	    </li>
+	    {% endif %}
 	  </ul>
 	  
 	  
-	  <font color="#FF0000">{{error-message}}</font>
+	  {% if "user" not in session %}
           <form class="navbar-form navbar-right" role="form" method="POST">
+	    <font color="#FF0000">{{error_message}}</font>
             <div class="form-group">
               <input type="text" name="user" placeholder="Username" class="form-control">
             </div>
@@ -54,6 +65,7 @@
             </div>
             <button type="submit" class="btn btn-success">Sign in</button>
           </form>
+	  {% endif %}
         </div><!--/.navbar-collapse -->
       </div>
     </div>
@@ -77,7 +89,7 @@
             <div class="carousel-caption">
               <h1>Need help killing someone?</h1>
               <p>LET'S GO KILL SOMEONE.</p>
-              <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today.</a></p>
+              <p><a class="btn btn-lg btn-primary" href="{{url_for('register')}}" role="button">Sign up today.</a></p>
             </div>
           </div>
         </div>
@@ -87,7 +99,7 @@
             <div class="carousel-caption">
               <h1>Acid</h1>
               <p>Dissolve the body in acid so no traces will be left behind.</p>
-              <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>
+              <p><a class="btn btn-lg btn-primary" href="{{url_for('register')}}" role="button">Sign up today</a></p>
             </div>
           </div>
         </div>
@@ -97,7 +109,7 @@
             <div class="carousel-caption">
               <h1>Stab them in the back</h1>
               <p>just like they stabbed you in the back.</p>
-              <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>
+              <p><a class="btn btn-lg btn-primary" href="{{url_for('register')}}" role="button">Sign up today</a></p>
             </div>
           </div>
         </div>
@@ -107,7 +119,7 @@
             <div class="carousel-caption">
               <h1>A bullet</h1>
               <p>Let's go shoot 'em.</p>
-              <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>
+	      <p><a class="btn btn-lg btn-primary" href="{{url_for('register')}}" role="button">Sign up today</a></p>
             </div>
           </div>
         </div>
@@ -130,19 +142,31 @@
          
           <h2>Need assistance?</h2>
           <p>Have someone you hate so much you want them to die? LET'S GO KILL 'EM .</p>
-          <p><a class="btn btn-default" href="#" role="button">Sign up today &raquo;</a></p>
+	  {% if "user" not in session %}
+          <p><a class="btn btn-default" href="{{url_for('register')}}" role="button">Sign up today &raquo;</a></p>
+	  {% else %}
+	  <p><a class="btn btn-default" href="{{url_for('maps')}}" role="button">Map &raquo;</a></p>
+	  {% endif %}
         </div><!-- /.col-lg-4 -->
         <div class="col-lg-4">
         
           <h2>Check the weather first.</h2>
           <p>Don't like the rain? Pick the perfect day to kill someone.</p>
-          <p><a class="btn btn-default" href="#" role="button">Sign up today &raquo;</a></p>
+	  {% if "user" not in session %}
+          <p><a class="btn btn-default" href="{{url_for('register')}}" role="button">Sign up today &raquo;</a></p>
+	  {% else %}
+	  <p><a class="btn btn-default" href="{{url_for('weather')}}" role="button">Check the Weather&raquo;</a></p>
+	  {% endif %}
         </div><!-- /.col-lg-4 -->
         <div class="col-lg-4">
         
           <h2>Lawyers, just in case.</h2>
           <p>Just in case you mess up royally. We can help you plan the perferct murder but won't be able to control your stupid impulses.</p>
-          <p><a class="btn btn-default" href="#" role="button">Sign up today &raquo;</a></p>
+	  {% if "user" not in session %}
+          <p><a class="btn btn-default" href="{{url_for('register')}}" role="button">Sign up today &raquo;</a></p>
+	  {% else %}
+	  <p><a class="btn btn-default" href="{{url_for('lawyer')}}" role="button">Find a Lawyer &raquo;</a></p>
+	  {% endif %}
         </div><!-- /.col-lg-4 -->
       </div><!-- /.row -->
 

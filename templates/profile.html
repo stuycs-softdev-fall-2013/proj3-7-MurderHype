@@ -33,17 +33,22 @@
         <div class="navbar-collapse collapse">
 	  <ul class="nav navbar-nav">
 	    <li>
-	      <a href="index.html">Home</a>
+	      <a href="{{url_for('home')}}">Home</a>
 	    </li>
 	    <li>
-	      <a href="leaderboard.html">Leaderboard</a>
+	      <a href="{{url_for('leaderboard')}}">Leaderboard</a>
 	    </li>
 	    <li>
-	      <a href="forums.html">Forums</a>
+	      <a href="{{url_for('forums')}}">Forums</a>
 	    </li>
 	    <li>
-	      <a href="addkill.html">Add Kill</a>
+	      <a href="{{url_for('addKill')}}">Add Kill</a>
 	    </li>
+	    {% if "user" in session %}
+	    <li>
+	      <a href="{{url_for('logout')}}">Log Out</a>
+	    </li>
+	    {% endif %}
 	  </ul> 
         </div><!--/.navbar-collapse -->
       </div>
@@ -70,17 +75,16 @@
 	  <td>Name of Victim</td>
 	  <td>Killing Method</td>
 	</tr>
+	{% set x = 1 %}
+	{% for kill in data %}
 	<tr>
-	  <td>VARIABLES</td>
-	  <td>VARIABLES</td>
-	  <td>VARIABLES</td>
-	  <td>VARIABLES</td>
-
+	  <td>{{x}}</td>
+	  <td>{{kill['time']}}</td>
+	  <td>{{kill['victim']}}</td>
+	  <td>{{kill['detail']}}</td>
 	</tr>
-
-	<tr>
-	  
-	</tr>
+	{% set x = x + 1 %}
+	{% endfor %}
 	
       </table>
     </div>

@@ -33,14 +33,25 @@
         <div class="navbar-collapse collapse">
 	  <ul class="nav navbar-nav">
 	    <li>
-	      <a href="index.html">Home</a>
+	      <a href="{{url_for('home')}}">Home</a>
 	    </li>
 	    <li>
-	      <a href="leaderboard.html">Leaderboard</a>
+	      <a href="{{url_for('leaderboard')}}">Leaderboard</a>
 	    </li>
 	    <li>
-	      <a href="forums.html">Forums</a>
+	      <a href="{{url_for('forums')}}">Forums</a>
 	    </li>
+	    {% if "user" in session %}
+	    <li>
+	      <a href="{{url_for('profile')}}">Profile</a>
+	    </li>
+	    <li></li>
+	    <li></li>
+	    <li>
+	      <a href="{{url_for('logout')}}">Log Out</a>
+	    </li>
+	    {% endif %}
+
 	  </ul> 
         </div><!--/.navbar-collapse -->
       </div>
@@ -55,30 +66,30 @@
 	  <h1>Join today.</h1>
 	</div>
 	<p></p>
-	<form class="form-horizontal" role="form" method="POST">
+	<form class="form-horizontal"  method="POST">
 	  <font color="#FF0000">{{em}}</font>
 	  <div class="form-group">
 	    <label for="input" class="col-sm-2 control-label">Full name</label>
 	    <div class="col-sm-5">
-	      <input type="email" class="form-control" id="name" placeholder="Full name">
+	      <input type="text" class="form-control" name="name" placeholder="Full name">
 	    </div>
 	  </div>
 	  <div class="form-group">
 	    <label for="input" class="col-sm-2 control-label">Username</label>
 	    <div class="col-sm-5">
-	      <input type="email" class="form-control" id="user" placeholder="Choose your username">
+	      <input type="text" class="form-control" name="user" placeholder="Choose your username">
 	    </div>
 	  </div>
 	  <div class="form-group">
 	    <label for="input" class="col-sm-2 control-label">Password</label>
 	    <div class="col-sm-5">
-	      <input type="password" class="form-control" id="pw" placeholder="Create a password">
+	      <input type="password" class="form-control" name="pw" placeholder="Create a password">
 	    </div>
 	  </div>
 	  <div class="form-group">
 	    <label for="input" class="col-sm-2 control-label">Describe yourself</label>
 	    <div class="col-sm-5">
-	      <input type="text" class="form-control" id="detail" placeholder="Your favorite method of killing">
+	      <input type="text" class="form-control" name="detail" placeholder="Your favorite method of killing">
 	    </div>
 	  </div>
 	  <p></p>

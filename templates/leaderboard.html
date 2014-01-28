@@ -33,14 +33,24 @@
         <div class="navbar-collapse collapse">
 	  <ul class="nav navbar-nav">
 	    <li>
-	      <a href="index.html">Home</a>
+	      <a href="{{url_for('home')}}">Home</a>
 	    </li>
 	    <li>
-	      <a href="leaderboard.html">Leaderboard</a>
+	      <a href="{{url_for('leaderboard')}}">Leaderboard</a>
 	    </li>
 	    <li>
-	      <a href="forums.html">Forums</a>
+	      <a href="{{url_for('forums')}}">Forums</a>
 	    </li>
+	    {% if 'user' in session %}
+	    <li>
+	      <a href="{{url_for('profile')}}">Profile</a>
+	    </li>
+	    <li></li>
+	    <li></li>
+	    <li>
+	      <a href="{{url_for('logout')}}">Log Out</a>
+	    </li>
+	    {% endif %}
 	  </ul> 
         </div><!--/.navbar-collapse -->
       </div>
@@ -66,7 +76,7 @@
 	<td>Favorite Killing Method</td>
 	<td>Number of Kills</td>
       </tr>
-      {% x = 1 %}
+      {% set x = 1 %}
       {% for ranker in data %}
       <tr>
 	<td>{{x}}</td>
@@ -74,7 +84,7 @@
 	<td>{{ranker['detail']}}</td>
 	<td>{{ranker['posts']}}</td>
       </tr>
-      {% x = x + 1 %}
+      {% set x = x + 1 %}
       {% endfor %}      
     </table>
 

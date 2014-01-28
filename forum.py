@@ -31,7 +31,7 @@ def respond(responder,title,text):
     id = [x['responses'] for x in thread.find({'title':title})]
     response.insert({'author':responder,'title':title,'response':text,'id':id[0],'time':strftime("%X %x"),'likes':0})
     thread.update({'title':title},{'$inc':{'responses':1}})
-    return(id)
+    return id[0]
 
 def upvote(id):
     response.update({'id':id},{"$inc":{'likes':1}})
