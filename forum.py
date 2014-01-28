@@ -3,8 +3,6 @@ from time import strftime
 client = MongoClient()
 thread = client.db.thread
 response = client.db.response
-thread.remove()
-response.remove()
 
 def write(author,title,post):
     if thread.find({"title":title}).count()==0:
@@ -65,3 +63,5 @@ if __name__ == "__main__":
     print(getResponses('first post'))
     print(getPost('first post'))
 
+    thread.remove()
+    response.remove()
